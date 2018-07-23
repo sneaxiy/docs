@@ -4,7 +4,8 @@
 使用PyReader导入训练和测试数据
 ############################
 
-Paddle Fluid支持PyReader Operator，实现Python端往C++端导入数据的功能。与 :ref:`user_guide_use_numpy_array_as_train_data` 不同，在使用PyReader Operator时，Python端导入数据的过程和 :code:`Executor::Run()` 读取数据的过程是异步进行的，且能与 :code:`double_buffer_reader` 配合以进一步提高数据读取性能。
+Paddle Fluid支持PyReader Operator，实现Python端往C++端导入数据的功能。与 :ref:`user_guide_use_numpy_array_as_train_data` 不同，
+在使用PyReader Operator时，Python端导入数据的过程和 :code:`Executor::Run()` 读取数据的过程是异步进行的，且能与 :code:`double_buffer_reader` 配合以进一步提高数据读取性能。
 
 创建PyReader Operator对象
 ################################
@@ -24,7 +25,7 @@ Paddle Fluid支持PyReader Operator，实现Python端往C++端导入数据的功
 
 其中，capacity为PyReader Operator对象的缓存区大小；shapes为batch各参量（如图像分类任务中的image和label)
 的尺寸；dtypes为batch各参量的数据类型，name为PyReader Operator对象的名称，use_double_buffer默认为True，
-表示使用:code:`double_buffer_reader`。
+表示使用 :code:`double_buffer_reader` 。
 
 若要创建多个不同的PyReader Operator对象（如训练阶段和测试阶段往往需创建两个不同的PyReader Operator对象），
 必须给不同的PyReader Operator对象指定不同的name。比如，在同一任务中创建训练阶段和测试阶段的PyReader
@@ -46,10 +47,10 @@ Operator对象的方式为：
                                             name='test',
                                             use_double_buffer=True)
 
-注意，Program.clone()方法不能实现PyReader Operator对象的复制，因此必须用以上方式创建训练阶段和测试阶段的不同
+注意， :code:`Program.clone()` 方法不能实现PyReader Operator对象的复制，因此必须用以上方式创建训练阶段和测试阶段的不同
 PyReader Operator对象。
 
-由于Program.clone()无法实现PyReader Operator对象的复制，因此用户需通过:code:`fluid.unique_name.guard()`
+由于Program.clone()无法实现PyReader Operator对象的复制，因此用户需通过 :code:`fluid.unique_name.guard()` 
 的方式实现训练阶段和测试阶段模型参数的共享，具体方式为：
 
 .. code-block:: python
