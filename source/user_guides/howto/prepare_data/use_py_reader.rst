@@ -4,8 +4,7 @@
 使用PyReader导入训练和测试数据
 ############################
 
-Paddle Fluid支持PyReader Operator，实现Python端往C++端导入数据的功能。与 :ref:`user_guide_use_numpy_array_as_train_data` 不同，
-在使用PyReader Operator时，Python端导入数据的过程和 :code:`Executor::Run()` 读取数据的过程是异步进行的，且能与 :code:`double_buffer_reader` 配合以进一步提高数据读取性能。
+Paddle Fluid支持PyReader Operator，实现Python端往C++端导入数据的功能。与 :ref:`user_guide_use_numpy_array_as_train_data` 不同，在使用PyReader Operator时，Python端导入数据的过程和 :code:`Executor::Run()` 读取数据的过程是异步进行的，且能与 :code:`double_buffer_reader` 配合以进一步提高数据读取性能。
 
 创建PyReader Operator对象
 ################################
@@ -23,13 +22,9 @@ Paddle Fluid支持PyReader Operator，实现Python端往C++端导入数据的功
                                        name='py_reader',
                                        use_double_buffer=True)
 
-其中，capacity为PyReader Operator对象的缓存区大小；shapes为batch各参量（如图像分类任务中的image和label)
-的尺寸；dtypes为batch各参量的数据类型，name为PyReader Operator对象的名称，use_double_buffer默认为True，
-表示使用 :code:`double_buffer_reader` 。
+其中，capacity为PyReader Operator对象的缓存区大小；shapes为batch各参量（如图像分类任务中的image和label)的尺寸；dtypes为batch各参量的数据类型，name为PyReader Operator对象的名称，use_double_buffer默认为True，表示使用 :code:`double_buffer_reader` 。
 
-若要创建多个不同的PyReader Operator对象（如训练阶段和测试阶段往往需创建两个不同的PyReader Operator对象），
-必须给不同的PyReader Operator对象指定不同的name。比如，在同一任务中创建训练阶段和测试阶段的PyReader
-Operator对象的方式为：
+若要创建多个不同的PyReader Operator对象（如训练阶段和测试阶段往往需创建两个不同的PyReader Operator对象），必须给不同的PyReader Operator对象指定不同的name。比如，在同一任务中创建训练阶段和测试阶段的PyReader Operator对象的方式为：
 
 .. code-block:: python
 
@@ -87,8 +82,8 @@ PyReader Operator对象。
 设置PyReader Operator对象的数据源
 ################################
 PyReader Operator对象提供 :code:`decorate_tensor_provider` 和 :code:`decorate_paddle_reader` 方法，它们均接收一个Python生成器 :code:`generator` 对象作为数据源，两个方法的区别在于：
-    - :code:`decorate_tensor_provider` 方法：要求 :code:`generator` 每次产生一个 :code:`list` 或 :code:`tuple` 对象， :code:`list` 或 :code:`tuple` 对象中的每个元素为 :code:`LoDTensor` 类型或Numpy数组类型，且 :code:`LoDTensor` 或Numpy数组的 :code:`shape` 必须与创建PyReader Operator对象时指定的 :code:`shapes` 参数完全一致。
-    - :code:`decorate_paddle_reader` 方法：要求:code:`generator`每次产生一个 :code:`list`或 :code:`tuple` 对象， :code:`list` 或 :code:`tuple` 对象中的每个元素为Numpy数组类型，但Numpy数组的 :code:`shape` 不必与创建PyReader Operator对象时指定的 :code:`shapes` 参数完全一致， :code:`decorate_paddle_reader` 方法内部会对其进行 :code:`reshape` 操作。
+1. :code:`decorate_tensor_provider` 方法：要求 :code:`generator` 每次产生一个 :code:`list` 或 :code:`tuple` 对象， :code:`list` 或 :code:`tuple` 对象中的每个元素为 :code:`LoDTensor` 类型或Numpy数组类型，且 :code:`LoDTensor` 或Numpy数组的 :code:`shape` 必须与创建PyReader Operator对象时指定的 :code:`shapes` 参数完全一致。
+2. :code:`decorate_paddle_reader` 方法：要求:code:`generator`每次产生一个 :code:`list`或 :code:`tuple` 对象， :code:`list` 或 :code:`tuple` 对象中的每个元素为Numpy数组类型，但Numpy数组的 :code:`shape` 不必与创建PyReader Operator对象时指定的 :code:`shapes` 参数完全一致， :code:`decorate_paddle_reader` 方法内部会对其进行 :code:`reshape` 操作。
 
 使用PyReader Operator进行模型训练和测试
 ################################
@@ -133,5 +128,7 @@ PyReader Operator对象提供 :code:`decorate_tensor_provider` 和 :code:`decora
             test_reader.reset()
 
 具体步骤为：
-- 在每个epoch开始前，调用 :code:`start()` 方法启动PyReader Operator对象
-- 在每个epoch结束时， :code:`read_file` 抛出 :code:`fluid.core.EOFException` 异常，在捕获异常后调用 :code:`reset()` 方法重置PyReader Operator对象的状态，以便启动下一轮的epoch
+
+1. 在每个epoch开始前，调用 :code:`start()` 方法启动PyReader Operator对象
+
+2. 在每个epoch结束时， :code:`read_file` 抛出 :code:`fluid.core.EOFException` 异常，在捕获异常后调用 :code:`reset()` 方法重置PyReader Operator对象的状态，以便启动下一轮的epoch
