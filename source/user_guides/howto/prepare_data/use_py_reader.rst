@@ -1,4 +1,4 @@
-.. _user_guide_use_py_reader:
+.. user_guide_use_py_reader:
 
 ############################
 使用PyReader导入训练和测试数据
