@@ -50,7 +50,7 @@ Operator对象的方式为：
 注意， :code:`Program.clone()` 方法不能实现PyReader Operator对象的复制，因此必须用以上方式创建训练阶段和测试阶段的不同
 PyReader Operator对象。
 
-由于Program.clone()无法实现PyReader Operator对象的复制，因此用户需通过 :code:`fluid.unique_name.guard()` 
+由于 :code:`Program.clone()` 无法实现PyReader Operator对象的复制，因此用户需通过 :code:`fluid.unique_name.guard()`
 的方式实现训练阶段和测试阶段模型参数的共享，具体方式为：
 
 .. code-block:: python
@@ -86,12 +86,11 @@ PyReader Operator对象。
 
 设置PyReader Operator对象的数据源
 ################################
-PyReader Operator对象提供:code:`decorate_tensor_provider`和:code:`decorate_paddle_reader`方法，
-它们均接收一个Python生成器:code:`generator`对象作为数据源，两个方法的区别在于：
-- :code:`decorate_tensor_provider`方法：要求:code:`generator`每次产生一个:code:`list`或:code:`tuple`对象，
-:code:`list`或:code:`tuple`对象中的每个元素为:code:`LoDTensor`类型或Numpy数组类型，且:code:`LoDTensor`
+PyReader Operator对象提供 :code:`decorate_tensor_provider` 和 :code:`decorate_paddle_reader` 方法，
+它们均接收一个Python生成器 :code:`generator` 对象作为数据源，两个方法的区别在于：
+    - :code:`decorate_tensor_provider` 方法：要求 :code:`generator` 每次产生一个 :code:`list` 或 :code:`tuple` 对象， :code:`list` 或 :code:`tuple` 对象中的每个元素为 :code:`LoDTensor` 类型或Numpy数组类型，且 :code:`LoDTensor`
 或Numpy数组的:code:`shape`必须与创建PyReader Operator对象时指定的:code:`shapes`参数完全一致。
-- :code:`decorate_paddle_reader`方法：要求:code:`generator`每次产生一个:code:`list`或:code:`tuple`对象，
+    - :code:`decorate_paddle_reader` 方法：要求:code:`generator`每次产生一个:code:`list`或:code:`tuple`对象，
 :code:`list`或:code:`tuple`对象中的每个元素为Numpy数组类型，但Numpy数组的:code:`shape`不必与创建
 PyReader Operator对象时指定的:code:`shapes`参数完全一致，:code:`decorate_paddle_reader`方法内部会对其进行
 :code:`reshape`操作。
