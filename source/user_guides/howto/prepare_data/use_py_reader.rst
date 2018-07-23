@@ -97,7 +97,7 @@ PyReader Operator对象提供 :code:`decorate_tensor_provider` 和 :code:`decora
     startup_exe.run(test_startup)
 
     trainer = fluid.ParallelExecutor(
-        use_cuda=True, loss_name=loss.name, main_program=train_prog)
+        use_cuda=True, loss_name=train_loss.name, main_program=train_prog)
 
     tester = fluid.ParallelExecutor(
         use_cuda=True, share_vars_from=trainer, main_program=test_prog)
