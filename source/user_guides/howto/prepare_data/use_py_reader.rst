@@ -5,7 +5,7 @@
 ############################
 
 Paddle Fluid支持PyReader Operator，实现Python端往C++端导入数据的功能。与
- :ref:`user_guide_use_numpy_array_as_train_data`不同，在使用PyReader Operator时，
+:ref:`user_guide_use_numpy_array_as_train_data`不同，在使用PyReader Operator时，
 Python端导入数据的过程和:code:`Executor::Run()`读取数据的过程是异步进行的，且能与
 :code:`double_buffer_reader`配合以进一步提高数据读取性能。
 
