@@ -1,10 +1,10 @@
-.. user_guide_use_py_reader:
+_user_guide_use_numpy_array_as_train_data.. _user_guide_use_py_reader:
 
 ############################
 使用PyReader导入训练和测试数据
 ############################
 
-Paddle Fluid支持PyReader Operator，实现Python端往C++端导入数据的功能。与 :ref:`user_guide_use_numpy_array_as_train_data` 不同，在使用PyReader Operator时，Python端导入数据的过程和 :code:`Executor::Run()` 读取数据的过程是异步进行的，且能与 :code:`double_buffer_reader` 配合以进一步提高数据读取性能。
+Paddle Fluid支持PyReader Operator，实现Python端往C++端导入数据的功能。与 :ref:`_user_guide_use_numpy_array_as_train_data` 不同，在使用PyReader Operator时，Python端导入数据的过程和 :code:`Executor::Run()` 读取数据的过程是异步进行的，且能与 :code:`double_buffer_reader` 配合以进一步提高数据读取性能。
 
 创建PyReader Operator对象
 ################################
@@ -82,7 +82,9 @@ PyReader Operator对象。
 设置PyReader Operator对象的数据源
 ################################
 PyReader Operator对象提供 :code:`decorate_tensor_provider` 和 :code:`decorate_paddle_reader` 方法，它们均接收一个Python生成器 :code:`generator` 对象作为数据源，两个方法的区别在于：
+
 1. :code:`decorate_tensor_provider` 方法：要求 :code:`generator` 每次产生一个 :code:`list` 或 :code:`tuple` 对象， :code:`list` 或 :code:`tuple` 对象中的每个元素为 :code:`LoDTensor` 类型或Numpy数组类型，且 :code:`LoDTensor` 或Numpy数组的 :code:`shape` 必须与创建PyReader Operator对象时指定的 :code:`shapes` 参数完全一致。
+
 2. :code:`decorate_paddle_reader` 方法：要求:code:`generator`每次产生一个 :code:`list`或 :code:`tuple` 对象， :code:`list` 或 :code:`tuple` 对象中的每个元素为Numpy数组类型，但Numpy数组的 :code:`shape` 不必与创建PyReader Operator对象时指定的 :code:`shapes` 参数完全一致， :code:`decorate_paddle_reader` 方法内部会对其进行 :code:`reshape` 操作。
 
 使用PyReader Operator进行模型训练和测试
