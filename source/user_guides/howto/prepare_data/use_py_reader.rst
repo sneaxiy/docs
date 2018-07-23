@@ -4,7 +4,7 @@
 使用PyReader导入训练和测试数据
 ############################
 
-Paddle Fluid支持PyReader Operator，实现Python端往C++端导入数据的功能。与 :ref:`_user_guide_use_numpy_array_as_train_data` 不同，在使用PyReader Operator时，Python端导入数据的过程和 :code:`Executor::Run()` 读取数据的过程是异步进行的，且能与 :code:`double_buffer_reader` 配合以进一步提高数据读取性能。
+Paddle Fluid支持PyReader Operator，实现Python端往C++端导入数据的功能。与 :ref:`user_guide_use_numpy_array_as_train_data` 不同，在使用PyReader Operator时，Python端导入数据的过程和 :code:`Executor::Run()` 读取数据的过程是异步进行的，且能与 :code:`double_buffer_reader` 配合以进一步提高数据读取性能。
 
 创建PyReader Operator对象
 ################################
@@ -131,6 +131,6 @@ PyReader Operator对象提供 :code:`decorate_tensor_provider` 和 :code:`decora
 
 具体步骤为：
 
-1. 在每个epoch开始前，调用 :code:`start()` 方法启动PyReader Operator对象
+1. 在每个epoch开始前，调用 :code:`start()` 方法启动PyReader Operator对象；
 
-2. 在每个epoch结束时， :code:`read_file` 抛出 :code:`fluid.core.EOFException` 异常，在捕获异常后调用 :code:`reset()` 方法重置PyReader Operator对象的状态，以便启动下一轮的epoch
+2. 在每个epoch结束时， :code:`read_file` 抛出 :code:`fluid.core.EOFException` 异常，在捕获异常后调用 :code:`reset()` 方法重置PyReader Operator对象的状态，以便启动下一轮的epoch。
