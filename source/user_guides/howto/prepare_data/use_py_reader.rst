@@ -14,7 +14,6 @@ Paddle Fluid支持PyReader Operator，实现Python端往C++端导入数据的功
 .. code-block:: python
 
     import paddle.fluid as fluid
-    import numpy as np
 
     py_reader = fluid.layers.py_reader(capacity=64,
                                        shapes=[(-1,3,224,224), (-1,1)],
@@ -27,8 +26,6 @@ Paddle Fluid支持PyReader Operator，实现Python端往C++端导入数据的功
 若要创建多个不同的PyReader Operator对象（如训练阶段和测试阶段往往需创建两个不同的PyReader Operator对象），必须给不同的PyReader Operator对象指定不同的name。比如，在同一任务中创建训练阶段和测试阶段的PyReader Operator对象的方式为：
 
 .. code-block:: python
-
-    import paddle.fluid as fluid
 
     train_py_reader = fluid.layers.py_reader(capacity=64,
                                              shapes=[(-1,3,224,224), (-1,1)],
